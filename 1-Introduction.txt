@@ -1,0 +1,59 @@
+Scenario: We have developer team who are working on agile SDLC
+which means they are required to change nad test the code frequesntly 
+if the error comes out then they are required to trace error initially
+
+Soltution: Continous Integration
+BCz CI makes sure the at every commit code will be tested
+
+We are doing CI on CLOUD
+
+Services we are using: 
+Bitbucket: for code repo
+code artifact: for maven dependencies
+AWs CODe build: to build code
+Sonar cloud : for code analysis
+code build : to build artifact
+S3 : for storage
+SNS : for notification
+AWS code pipeline : for connecting all the services together
+
+
+FLow of working :
+FIrstly the developer push the code into bitbucket repository which we will setup
+at every commit AWS codepipeline trigger and sonarcloud will start doing analysis and run tests
+We also required Maven dependencies for building the code so we use code artifact for storing maven dependencies
+If the quality of the source code is good then it will go to next step to build the artifact for this we are going to use AWS buildjob to execute "mvn build"
+which will generate the artifact and the stire the output into the S3 bucket.
+
+
+Steps:
+1 Bitbucket creation
+- cretae account and repo on BB
+- ssh autehntication from local to BB account
+- migrate vprofile project soucre code from hithub to bitbucket
+2 Code Artifact
+- create code artifact repo
+- look at the setting for pom.xml and settings.xml
+- understand the buildpsec.yml file for code andlysis build job
+3 Sonar cloud 
+- cretae account and set project details
+4 Parameter store
+- store sonar cloud dteials into PS
+- mention parameter store details in builspec.yml file
+5 AWS code build job
+- Understand buildspec.yml file for code build job
+- Update pom.xml & settings.xml for code artifact repo detail
+- create a build job for sonar code analysis
+
+6 build job ofr Artifact
+- understand buildspec.yml file
+- Cretae S3 bucket for artifcat storage
+- create aws code build job
+- Execute and test
+7 Code pipeline
+- Create SNS notifications 
+- cretae aws codepipeline
+- Execute and test 
+
+
+

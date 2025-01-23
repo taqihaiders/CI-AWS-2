@@ -1,0 +1,66 @@
+## Setup AWS code build of sonar analysis##
+
+## change URL of POM.xml file ##
+
+Go to the Artifact select "maven-central-repo"
+Click on view central connections
+Select maven and copy the URL\Come to pom.xml file
+Now place the url with the copied one 
+Then come to setting.xml file and do the same
+
+
+## making chnages in buildspec file ##
+
+Now drag the Buildspec file to the root level and set the name as
+buildspec.yml
+In buildspec file we have to change the export command with the
+Artifact maven repo command 
+We have to do the same like we do it in upper section but this time we have 
+to copy the  "Export a CodeArtifact authorization token" command which comes under this heading
+
+ 
+now paste the copy token command to buildspec file
+"NOW commit the changes and push it to the bitbucket repository"
+
+
+## Code build ##
+Now we will start building our code 
+steps:
+Go to codebuild 
+create new project
+give a name 
+select source as bitbucket
+then connect to bitbucket
+select your repo
+select ubuntu as a server
+Select buildspec bcz we have buildspec file already in our root destination
+
+Keep the other things default and create project
+
+## NOTE ##
+In the start the code build is going to fail buildpsec file bcz it doesnt have 
+permission for paramter store
+
+Now go to IAM and create policy to acces paramter store
+Steps:
+select service manager 
+gave a name
+slect policies select some of them according to my need and create 
+
+Now go to roles and write codebuild select the one you cretaed during creation of
+codebuild in that role attach policy of parameter which we have just created
+Also add CodeArtifact read onlyAccess policy
+
+
+## Running a Code build ##
+
+Now i am going to start a code build
+In the frist attempt it fails at the Download source section there was some error in builspec file i fixed that and it work fine
+
+
+
+Now my build show successful and works fine
+
+
+
+

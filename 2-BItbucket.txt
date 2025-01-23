@@ -1,0 +1,59 @@
+## BITBUCKET Setup ##
+
+BITBUCKET.ORG
+
+Create Account
+
+
+Create repository
+KEYS
+
+Generate SSH keys
+Copy public key to Bitbucket account
+SSH config file for Bitbucket
+MIGRATE FROM GITHUB TO BITBUCKET REPO
+
+Clone source code from GitHub
+Remove GitHub remote URL
+Add Bitbucket repository URL
+Push the code
+
+
+## Commands ## 
+516  git clone https://github.com/hkhcoder/vprofile-project.git
+  517  ls
+  518  cd vprofile-project/
+  519  clear
+  520  ls
+  521  ls -a
+  522  git branch -a
+  523  clear
+  524  for i in `git branch -a |grep remotes |grep -v HEAD |grep -d / -f3`; do git checkout $i;done
+  525  for i in `git branch -a |grep remotes |grep -v HEAD |cut -d / -f3`; do git checkout $i;done
+  526  git fetch --tags
+  527  git remote rm origin
+  528  cat .git/config
+  529  git remote add origin git@bitbucket.org:devopscicd-taqi/vprofile-build2.git
+  530  cat .git/config
+
+
+
+
+## AWS CODE ARtifcat Setup ## 
+
+It is used to sore maven dependencies to build Artifact through Maven,
+It work as a storage of libraries
+
+Simple Workflow:
+Create a repository in AWS CodeArtifact.
+Log in to CodeArtifact using AWS CLI.
+Add CodeArtifact as a repository in your Maven project (pom.xml).
+Use mvn install to fetch dependencies from CodeArtifact.
+Use mvn deploy to upload your libraries to CodeArtifact.
+
+
+After creating Repo we will open VScode and go the file which we clones through github and checkout 
+to the ci-aws branch
+
+
+

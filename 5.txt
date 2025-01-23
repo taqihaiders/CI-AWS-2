@@ -1,0 +1,71 @@
+In previous section we have reached AWS CodeBuild where it fetches the code and sends
+it to the SonarCloud for quality check And it alsp Download dependencies from the codeArtifact
+
+NExt Stage: Now next step is to build the Artifact and store it on S3 bucket
+
+## AWS Codebuild for Build Artifact ##
+
+For this section we have another builspec file which lies in AWS-files
+so we are going to make some changes in that buildspec file
+
+STeps:
+DO the same like we do previous copy command of "Export from maven on codeArtifact"
+and place it in the buildspec file
+Now commit the changes
+Come to codebuild and create a new project
+keep the things same like before and add the path of buildpsec file
+"aws-files/build_buildspec.yml"
+
+
+add the same group name like we did before 
+Now got to IAM role
+Search for the role which we have created while creating code build project
+then and add policy of "COdeArtifactReadOnlyAccess"
+
+Now RUN start Build and check if it is successful
+
+## Setting up codepipelines to connect all the services together ##
+
+Creating S3 bucket: Firstly we are going to create a S3 bucket to store our Artifact
+Now create a folder inside bukcet where we will store the Artifact
+
+Creating SNS: for recieving notificatiosn regarding the evens happening in codebuild and other
+Create a topic, now create subscription for the topic
+In protcol select email
+Now confrim it through gmail which you have provided
+
+
+Creating Codepipeline servicie:
+Steps:
+Gave a name to pipeline and to service role
+Select bitbucket as source provider so when there is a commit it triggers the pipeline
+select the repo
+select the branch
+now select the build provider as CodeBuild select project fisrlty cretaed build after creating codepipeline 
+we will add other project as well
+Skip the test and build stage we will add it later in edit section
+now slect create pipleine and stop execution bcz we are going 
+to add stages
+Now in Edit section we will add CodeAnalysis stage where we 
+will select everython about Analysis 
+select project name as Analysis
+After build stage we will create a Deploy stage
+Select Action provider as S3
+Select input Artifact as BuildArtifact
+Select S3 buket and folder name as created folder
+
+-- Setting the Notifications --
+Go to the settings section of the codepipeline
+click on the notification 
+starets create notification
+Select SNS topic which we have created
+And Submit
+
+
+We have all set here now have to come to pipeline to relase the changes 
+
+
+## Now wehn their is a change it will trigger code pipeline and starts building and testing the code ##
+
+## Test the Pipeline ##
+lets add a extra # in the Readme.md file and commit the changes
